@@ -31,7 +31,7 @@ def select_path():
     path = Path(callback())
     windows_path = str(PureWindowsPath(path))
     windows_path = windows_path.replace("\\", "\\\\")
-    videoplayer.vp_module('path', windows_path)
+    videoplayer.vp_module(windows_path)
 
 
 def window():
@@ -48,7 +48,7 @@ def window():
     label_commands = tk.Label(window_button, text="Then, use the following commands to play the video selected :",
                               font="Arial, 16")
     label_commands.pack(side="top", fill="x")
-    play_button = tk.Button(window_button, text="Play", font="Arial")
+    play_button = tk.Button(window_button, text="Play", font="Arial", command=play_video)
     play_button.pack()
     fastforward_button = tk.Button(window_button, text="Fast Forward", font="Arial", command=fastforward_video)
     fastforward_button.pack()

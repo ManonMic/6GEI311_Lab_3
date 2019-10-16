@@ -186,10 +186,11 @@ static PyObject* vp_module(PyObject* self, PyObject* args)
 {
 	char *choice;
 	char *path;
-	PyArg_ParseTuple(args, "z", &choice, &path);
+	PyArg_ParseTuple(args, "z", &choice);
 
 	static MediaPlayer *vp;
-	if (strcmp(choice, "path") == 0)
+
+	if (vp != NULL)
 	{
 		if (choice[0] == 'P')
 		{
@@ -204,12 +205,14 @@ static PyObject* vp_module(PyObject* self, PyObject* args)
 			vp->RewindVideo();
 		}
 	}
-	else
+
+	std::string pathPrefix = "C:\\";
+	if (std::strstr(choice, pathPrefix.c_str()) != NULL)
 	{
 		delete vp;
-		std::cout << "windows path = " << choice << std::endl;
-		vp = new MediaPlayer(convertCharArrayToLPCWSTR(path));
+		vp = new MediaPlayer(convertCharArrayToLPCWSTR(choice));
 	}
+
 	PyObject *pythonVal = Py_BuildValue("");
 	return pythonVal;
 }
